@@ -1,0 +1,6 @@
+@SecureCommerce.Identity_HostAddress = http://localhost:5162
+
+GET {{SecureCommerce.Identity_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

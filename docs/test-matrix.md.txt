@@ -1,0 +1,34 @@
+# Secure Commerce Gateway — Test Matrix
+
+**Environment:** Local development  
+**Gateway:** `http://localhost:5000`  
+**Products Service:** `http://localhost:5001`  
+**Orders Service:** `http://localhost:5002`  
+**Identity Service:** `http://localhost:5003`
+
+## Test Results
+
+| ID | Test Case | Expected Status | Observed Status | Result |
+|---|---|---|---|---|
+| TC-01 | Get all products without a token | 200 OK | 200 OK | PASS |
+| TC-02 | Get a product by ID without a token | 200 OK | 200 OK | PASS |
+| TC-03 | Login with valid credentials | 200 OK | 200 OK | PASS |
+| TC-04 | Create a product without a token | 401 Unauthorized | 401 Unauthorized | PASS |
+| TC-05 | Create a product with a valid token | 201 Created | 201 Created | PASS |
+| TC-06 | Update a product with a valid token | 204 No Content | 204 No Content | PASS |
+| TC-07 | Delete a product without a token | 401 Unauthorized | 401 Unauthorized | PASS |
+| TC-08 | Delete a product with a valid token | 204 No Content | 204 No Content | PASS |
+| TC-09 | Get orders without a token | 401 Unauthorized | 401 Unauthorized | PASS |
+| TC-10 | Get orders with a valid token | 200 OK | 200 OK | PASS |
+| TC-11 | Exceed the login rate limit | 429 Too Many Requests | 429 Too Many Requests | PASS* |
+
+## Notes
+
+- Products and orders use in-memory sample data. Data resets when the corresponding service restarts.
+- The local test credentials are `admin` / `Pass123!`. These are development-only credentials and should not be used in production.
+- JWTs expire after 30 minutes.
+- Never commit access tokens or production secrets to source control.
+- All listed endpoint status codes were observed during local testing.
+
+\* **TC-11:** Confirm the first five rapid login attempts returned `200 OK` and the sixth returned `429 Too Many Requests` before final submission. A `429` response was observed during testing, 
+but the complete six-request sequence should be verified to claim the exact threshold confidently.
